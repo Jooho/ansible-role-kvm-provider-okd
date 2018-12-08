@@ -1,0 +1,22 @@
+---
+
+- name: Create Data Directory (KVM install result log)
+  file: "state=directory path={{ kvm_log_dir }} force=yes mode=0777"
+  become: yes
+  delegate_to: "{{ kvm_install_host }}"
+
+- name: KVM Install
+  import_tasks: install.yaml
+
+- name: KVM Network
+  import_tasks: network.yaml
+
+- name: KVM Storage Pool
+  import_tasks: storage.yaml
+
+# TEST
+- name: Test_KVM_Install
+  shell: "virsh -c qemu:///system list"
+  delegate_to: "{{ kvm_install_host }}"
+  register: test_kvm_install
+  failed_when: test_kvm_install.rc != 0

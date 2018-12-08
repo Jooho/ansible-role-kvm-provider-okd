@@ -1,0 +1,41 @@
+---
+
+- name: Check if okd bridge exist
+  command: virsh -c qemu:///system net-info okd
+  become: yes
+  delegate_to: "{{ kvm_install_host }}"
+  ignore_errors: yes
+  register: okd_br_exist
+
+- name: Copy a new network bridge configuration for OKD
+  copy: "src=okd_br1.xml dest={{ kvm_log_dir }}/okd_br1.xml"
+  become: yes
+  delegate_to: "{{ kvm_install_host }}"
+  when: okd_br_exist.rc != 0
+
+- name: Config the new network bridge
+  command: "{{ item }}"
+  become: yes
+  delegate_to: "{{ kvm_install_host }}"
+  ignore_errors: yes
+  with_items:
+    - "virsh -c qemu:///system net-define {{ kvm_log_dir }}/okd_br1.xml"
+    - "virsh -c qemu:///system net-start okd"
+    - "virsh -c qemu:///system net-autostart okd"
+  when: okd_br_exist.rc != 0
+
+# Using virt_net module ==> Auto start does not work properly. (For Reference Only)
+#- virt_net: command=define name=okd xml='{{ lookup("file","okd_br1.xml") }}'
+#  become: yes
+#  delegate_to: "{{ kvm_install_host }}"
+
+#- virt_net: name=okd state=active autostart=yes
+#  become: yes
+#  delegate_to: "{{ kvm_install_host }}"
+
+- name: Check if KVM network bridge created successfully
+  command: "virsh -c qemu:///system net-info okd" 
+  become: yes
+  delegate_to: "{{ kvm_install_host }}"
+  register: okd_br_state
+  failed_when: okd_br_state.rc != 0
