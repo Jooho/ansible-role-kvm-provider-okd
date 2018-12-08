@@ -2,7 +2,7 @@ galaxy_info:
   role_name: kvm-provider-okd
   author: Jooho Lee
   description: Install/Config Virtual Machine Provider KVM for OKD
-  company: your company (optional)
+  company: Jhouse
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -15,8 +15,7 @@ galaxy_info:
   # - GPLv3
   # - Apache
   # - CC-BY
-  license: license (GPLv2, CC-BY, etc)
-
+  license: BSD
   min_ansible_version: 2.7
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
