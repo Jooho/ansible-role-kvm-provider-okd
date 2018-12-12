@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: kvm-provider-okd
+  role_name: kvm_provider_okd
   author: Jooho Lee
   description: Install/Config Virtual Machine Provider KVM for OKD
   company: Jhouse
