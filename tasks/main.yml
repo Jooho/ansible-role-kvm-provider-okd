@@ -6,13 +6,13 @@
   delegate_to: "{{ kvm_install_host }}"
 
 - name: KVM Install
-  import_tasks: install.yaml
+  import_tasks: install.yml
 
 - name: KVM Network
-  import_tasks: network.yaml
+  import_tasks: network.yml
 
 - name: KVM Storage Pool
-  import_tasks: storage.yaml
+  import_tasks: storage.yml
 
 # TEST
 - name: Test_KVM_Install
