@@ -24,7 +24,7 @@
     - "virsh -c qemu:///system net-autostart okd"
   when: okd_br_exist.rc != 0
 
-# Using virt_net module ==> Auto start does not work properly. (For Reference Only)
+# Using virt_net module ==> Auto start does not work properly. ( For Reference Only )
 #- virt_net: command=define name=okd xml='{{ lookup("file","okd_br1.xml") }}'
 #  become: yes
 #  delegate_to: "{{ kvm_install_host }}"

@@ -1,6 +1,6 @@
 ---
 
-- name: Install KVM
+- name: Install KVM 
   yum:
     name:
       - qemu-kvm

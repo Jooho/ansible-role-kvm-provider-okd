@@ -14,7 +14,7 @@
   delegate_to: "{{ kvm_install_host }}"
   when: kvm_vm_pool_dir != '/var/lib/virt/images' and kvm_storage_pool_exist.rc != 0
 
-- name: Create KVM Storage Pool
+- name: Create KVM Storage Pool 
   command: "{{ item }}"
   become: yes
   delegate_to: "{{ kvm_install_host }}"

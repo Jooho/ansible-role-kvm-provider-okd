@@ -14,7 +14,7 @@
 - name: KVM Storage Pool
   import_tasks: storage.yml
 
-# TEST
+# TEST 
 - name: Test_KVM_Install
   shell: "virsh -c qemu:///system list"
   delegate_to: "{{ kvm_install_host }}"
