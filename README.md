@@ -36,7 +36,7 @@ Example Playbook
   hosts: localhost
   tasks:
     - include_role:
-        name: Jooho.kvm_provider_okd
+        name: ansible-role-kvm-provider-okd
 ~~~
 
 License
