@@ -1,7 +1,7 @@
 ---
 
 - name: Check if KVM Storage Pool exist if kvm_vm_dir is not /var/lib/virt/images
-  command: virsh -c qemu:///system pool-info Public
+  command: virsh -c qemu:///system pool-info {{ kvm_storage_pool_name }}
   become: yes
   delegate_to: "{{ kvm_install_host }}"
   ignore_errors: yes

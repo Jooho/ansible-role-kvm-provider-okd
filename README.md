@@ -15,11 +15,12 @@ None
 Role Variables
 --------------
 
-| Name             | Default value           | Requird | Description                              |
-| ---------------- | ----------------------- | ------- | ---------------------------------------- |
-| kvm_log_dir      | /tmp/kvm                | no      | Where role related config/log file store |
-| kvm_vm_pool_dir  | /var/lib/libvirt/images | no      | Where VM images store                    |
-| kvm_install_host | localhost               | no      | Where KVM will install or installed      |
+| Name                  | Default value           | Requird | Description                              |
+| --------------------- | ----------------------- | ------- | ---------------------------------------- |
+| kvm_log_dir           | /tmp/kvm                | no      | Where role related config/log file store |
+| kvm_storage_pool_name | Public                  | no      | Where Storage Pool Name                  |
+| kvm_storage_pool_dir  | /var/lib/libvirt/images | no      | Where Storage Pool directory             |
+| kvm_install_host      | localhost               | no      | Where KVM will install or installed      |
 
 
 Dependencies

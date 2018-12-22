@@ -1,3 +1,4 @@
 kvm_log_dir: /tmp/kvm
-kvm_vm_pool_dir: /var/lib/libvirt/images
+kvm_storage_pool_dir: /var/lib/libvirt/images
+kvm_storage_pool_name: Public
 kvm_install_host: localhost
