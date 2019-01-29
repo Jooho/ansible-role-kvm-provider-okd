@@ -1,18 +1,23 @@
 ---
 
-- name: Check if KVM Storage Pool exist if kvm_vm_dir is not /var/lib/virt/images
+- name: If kvm_storage_pool_dir is not /var/lib/libvirt/images, set the Pool name to default
+  set_fact:
+    kvm_storage_pool_name: default
+  when: kvm_storage_pool_dir != '/var/lib/libvirt/images'
+
+- name: Check if KVM Storage Pool exist if kvm_storage_pool_dir is not /var/lib/libvirt/images
   command: virsh -c qemu:///system pool-info {{ kvm_storage_pool_name }}
   become: yes
   delegate_to: "{{ kvm_install_host }}"
   ignore_errors: yes
   register: kvm_storage_pool_exist
-  when: kvm_storage_pool_dir != 'var/lib/virt/images'
+  when: kvm_storage_pool_dir != '/var/lib/libvirt/images'
 
-- name: Copy KVM Storage Pool Xml if kvm_vm_dir is not /var/lib/virt/images
+- name: Copy KVM Storage Pool Xml if kvm_vm_dir is not /var/lib/libvirt/images
   template: "src=public-storage.xml.j2 dest={{ kvm_log_dir }}/public-storage.xml"
   become: yes
   delegate_to: "{{ kvm_install_host }}"
-  when: kvm_storage_pool_dir != '/var/lib/virt/images' and kvm_storage_pool_exist.rc != 0
+  when: kvm_storage_pool_dir != '/var/lib/libvirt/images' and kvm_storage_pool_exist.rc != 0
 
 - name: Create KVM Storage Pool 
   command: "{{ item }}"
@@ -22,10 +27,10 @@
     - "virsh -c qemu:///system pool-define {{ kvm_log_dir }}/public-storage.xml"
     - "virsh -c qemu:///system pool-start Public"
     - "virsh -c qemu:///system pool-autostart Public"
-  when: kvm_storage_pool_dir != '/var/lib/virt/images' and kvm_storage_pool_exist.rc != 0
+  when: kvm_storage_pool_dir != '/var/lib/libvirt/images' and kvm_storage_pool_exist.rc != 0
 
-- name: Check if KVM Storage Pool created successfully
-  command: "virsh -c qemu:///system pool-info Public"
+- name: Check if KVM Storage Pool is available
+  command: "virsh -c qemu:///system pool-info {{ kvm_storage_pool_name }}"
   become: yes
   delegate_to: "{{ kvm_install_host }}"
   register: kvm_vm_pool_check
